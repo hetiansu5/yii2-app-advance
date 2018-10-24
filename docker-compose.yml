@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+   frameworks.dev:
+     image: tinson/centos6.8-php7.0
+     expose:
+       - 80
+     depends_on:
+       - memcache.dev
+       - redis.dev
+     volumes:
+       - ".:/www/frameworks"
+     restart: always
+     environment:
+       VIRTUAL_HOST: api.frameworks-dev.xmwula.com,admin.frameworks-dev.xmwula.com
+     container_name: frameworks.dev
+     entrypoint: "/www/frameworks/assets/sh/entrypoint.sh"
+   memcache.dev:
+     image: memcached
+     restart: always
+     container_name: memcache.frameworks.dev
+   redis.dev:
+     image: redis
+     restart: always
+     container_name: redis.frameworks.dev
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
