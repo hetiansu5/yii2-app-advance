@@ -6,7 +6,7 @@ use common\lib\fw\Redis;
 class RedisQueue implements QueueInterface
 {
     private $redis;
-    private $redisKeyPrefix = 't-q:';
+    private $redisKeyPrefix = 't-q:'; //队列Job的前缀key
     private $queueName = '';
 
     public function __construct($queueName, array $config)
