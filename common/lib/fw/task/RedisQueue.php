@@ -1,12 +1,13 @@
 <?php
 namespace common\lib\fw\task;
 
+use common\constants\Common;
 use common\lib\fw\Redis;
 
 class RedisQueue implements QueueInterface
 {
     private $redis;
-    private $redisKeyPrefix = 't-q:'; //队列Job的前缀key
+    private $redisKeyPrefix = Common::PROJECT_KEY . 't-q:'; //队列Job的前缀key
     private $queueName = '';
 
     public function __construct($queueName, array $config)

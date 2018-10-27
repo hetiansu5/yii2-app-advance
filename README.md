@@ -40,7 +40,7 @@ assets/                  辅助脚本和环境配置文件等
 
 ## 项目根目录
 建议是以这种方式来
-/www/${appName}，当前项目的appName为frameworks，新项目初始化可以全局搜索替换项目名称
+/www/${appName}，若当前项目的appName为frameworks，新项目初始化可以全局搜索替换项目名称
 
 ## 环境变量
 
