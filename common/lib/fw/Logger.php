@@ -76,9 +76,9 @@ class Logger
                     't' => $time,
                     'lvl' => $levelText,
                     'h' => $host,
-                    'type' => $type,
+                    'cate' => $type,
                     'cip' => $clientIp,
-                    'path' => $pathInfo,
+                    'action' => $pathInfo,
                     'msg' => $message
                 ];
                 $content = json_encode($log, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PARTIAL_OUTPUT_ON_ERROR) . "\n";
@@ -99,9 +99,9 @@ class Logger
                     't' => $time,
                     'level' => $levelText,
                     'h' => $host,
-                    'type' => $type,
+                    'cate' => $type,
                     'cip' => $clientIp,
-                    'path' => $pathInfo,
+                    'action' => $pathInfo,
                     'msg' => $message
                 ];
                 $content = json_encode($log, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PARTIAL_OUTPUT_ON_ERROR) . "\n";

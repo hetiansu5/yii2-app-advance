@@ -52,9 +52,9 @@ class FileTarget extends \yii\log\FileTarget
             't' => date('c', $timestamp),
             'lvl' => $level,
             'h' => $host,
-            'type' => $category,
+            'cate' => $category,
             'cip' => $clientIp,
-            'path' => $pathInfo,
+            'action' => $pathInfo,
             'msg' => $text,
             'traces' => implode(',', $traces)
         ];
