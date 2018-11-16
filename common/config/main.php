@@ -36,13 +36,6 @@ return [
                     //以下的参数键都是类本身支持的公共属性
                     'levels' => ['error', 'warning'], //指定哪些告警级别的消息被处理
                     'logVars' => [], //指定追加的上下文信息，空数组代表不追加任何上下文
-                    'prefix' => function ($message) { //自定义消息前缀，增加用户ID和访问的控制器方法
-                        $userIp = \Yii::$app->request->getUserIP();
-                        $application = \Yii::$app->id;
-                        $controller = \Yii::$app->controller->id;
-                        $action = \Yii::$app->controller->action->id;
-                        return "[{$application}][{$controller}-{$action}][{$userIp}]";
-                    },
                     'logFile' => '/www/privdata/' . APP_NAME . '/log/app.log', //日志存放目录
                     'fileMode' => 0777, //日志权限
                 ],

@@ -4,7 +4,7 @@ namespace common\lib\fw;
 class Logger
 {
     use InstanceTrait;
-    
+
     const LEVEL_ERROR = 1;
     const LEVEL_WARN = 2;
     const LEVEL_INFO = 3;
@@ -33,8 +33,8 @@ class Logger
      */
     public function log($level, $message, $type)
     {
-        //app.log_handler为file时，日志格式为:[time(ISO8601)]  [host]  [type(service.module.function)]  [req_id]  [server_ip]  [client_ip]  [message(json:code,message,file,line,trace,biz_data)]
-        //app.log_handler为stdout时，日志格式为:{"t": "time(ISO8601)", "lvl": "level", "h": "host", "type": "type(service.module.function)", "reqid": "req_id", "sip": "server_ip", "cip": "client_ip", "msg": {"code": 0, "message": "xxx", "file": "file", "line": 0}}
+        //app.log_handler为file时，日志格式为:[time(ISO8601)]  [host]  [type(service.module.function)]  [req_id]  [server_ip]  [client_ip]  [message(json:code,message,file,line-template,trace,biz_data)]
+        //app.log_handler为stdout时，日志格式为:{"t": "time(ISO8601)", "lvl": "level", "h": "host", "type": "type(service.module.function)", "reqid": "req_id", "sip": "server_ip", "cip": "client_ip", "msg": {"code": 0, "message": "xxx", "file": "file", "line-template": 0}}
 
         $logLevelText = \Yii::$app->params['log.level'];
         $foundKey = array_search($logLevelText, $this->levelArr);
@@ -56,10 +56,20 @@ class Logger
         } else {
             $clientIp = '';
         }
+        $pathInfo = '';
+        if (method_exists($request, 'getPathInfo')) {
+            $pathInfo = $request->getPathInfo();
+        }
 
         $logHandler = \Yii::$app->params['log.handler'];
         $result = false;
         $levelText = isset($this->levelArr[$level]) ? $this->levelArr[$level] : self::LEVEL_INFO_TEXT;
+
+        $isString = is_string($message);
+        if (!$isString) {
+            $message = json_encode($message, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PARTIAL_OUTPUT_ON_ERROR);
+        }
+
         switch ($logHandler) {
             case self::HANDLER_STDOUT:
                 $log = [
@@ -68,6 +78,7 @@ class Logger
                     'h' => $host,
                     'type' => $type,
                     'cip' => $clientIp,
+                    'path' => $pathInfo,
                     'msg' => $message
                 ];
                 $content = json_encode($log, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PARTIAL_OUTPUT_ON_ERROR) . "\n";
@@ -90,6 +101,7 @@ class Logger
                     'h' => $host,
                     'type' => $type,
                     'cip' => $clientIp,
+                    'path' => $pathInfo,
                     'msg' => $message
                 ];
                 $content = json_encode($log, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PARTIAL_OUTPUT_ON_ERROR) . "\n";
@@ -109,9 +121,7 @@ class Logger
                 break;
 
             default:
-                if (!is_string($message)) {
-                    $message = json_encode($message, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PARTIAL_OUTPUT_ON_ERROR);
-                } else {
+                if ($isString) {
                     $message = str_replace(["\r", "\n"], ' ', $message);
                 }
                 $log = [
@@ -119,6 +129,7 @@ class Logger
                     $host,
                     $type,
                     $clientIp,
+                    $pathInfo,
                     $message
                 ];
                 $content = '[' . implode(']  [', $log) . ']' . "\n";
@@ -154,7 +165,7 @@ class Logger
     {
         $this->log(self::LEVEL_INFO, $logInfo, $type);
     }
-    
+
     public function debug($message, $type)
     {
         $this->log(self::LEVEL_DEBUG, $message, $type);
