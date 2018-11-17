@@ -14,7 +14,7 @@ $config = [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget', //指定日志插件
+                    'class' => 'common\lib\FileTarget', //指定日志插件
                     //以下的参数键都是类本身支持的公共属性
                     'levels' => ['error', 'warning'], //指定哪些告警级别的消息被处理
                     'logVars' => [], //指定追加的上下文信息，空数组代表不追加任何上下文
