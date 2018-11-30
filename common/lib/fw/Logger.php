@@ -74,7 +74,7 @@ class Logger
             case self::HANDLER_STDOUT:
                 $log = [
                     't' => $time,
-                    'lvl' => $levelText,
+                    'level' => $levelText,
                     'h' => $host,
                     'cate' => $type,
                     'cip' => $clientIp,

@@ -50,7 +50,7 @@ class FileTarget extends \yii\log\FileTarget
 
         $arr = [
             't' => date('c', $timestamp),
-            'lvl' => $level,
+            'level' => $level,
             'h' => $host,
             'cate' => $category,
             'cip' => $clientIp,
