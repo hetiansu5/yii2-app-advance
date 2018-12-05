@@ -27,30 +27,31 @@ arr=(
 for data in ${arr[@]}
 do
     if [ -d "${rootPath}/${data}/runtime" ];then
-        sudo chmod 777 ${rootPath}/${data}/runtime
+        chmod 777 ${rootPath}/${data}/runtime
     fi
 
     if [ -d "${rootPath}/${data}/web/assets" ];then
-        sudo chmod 777 ${rootPath}/${data}/web/assets
+        chmod 777 ${rootPath}/${data}/web/assets
     fi
 done
 
 
 # set file is executable
-sudo chmod +x ${rootPath}/console/web/yii
+chmod +x ${rootPath}/console/web/yii
 
-
-# create log dir
-if [ ! -d /www/privdata/${appName}/log ]; then
-    sudo mkdir -p /www/privdata/${appName}/log
-fi
-sudo chmod 777 /www/privdata/${appName}/log
 
 # soft link when it is dev environment
 if [ "$YII_ENV" == "dev" ];then
     if [ ! -d "${rootPath}/assets/log" ]; then
-        ln -s /www/privdata/${appName}/log ${rootPath}/assets/log
+        mkdir -p ${rootPath}/assets/log
+        ln -s ${rootPath}/assets/log /www/privdata/${appName}/log
     fi
+else
+    # create log dir
+    if [ ! -d /www/privdata/${appName}/log ]; then
+        mkdir -p /www/privdata/${appName}/log
+    fi
+    chmod 777 /www/privdata/${appName}/log
 fi
 
 echo "success"
