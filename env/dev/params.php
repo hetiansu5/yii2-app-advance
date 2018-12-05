@@ -3,14 +3,14 @@
 //非框架内置的配置项 -- 适用所有应用当前环境
 $mainRedisConfig = [ //redis配置
     'master' => [
-        'host' => 'redis..dev',
+        'host' => 'redis.' . APP_NAME . '.dev',
         'port' => 6379,
         'timeout' => 1, //s
         'pconnect' => false,
     ],
     'slaves' => [
         [
-            'host' => 'redis.logistics.dev',
+            'host' => 'redis.' . APP_NAME . '.dev',
             'port' => 6379,
             'timeout' => 1, //s
             'pconnect' => false,
@@ -22,7 +22,7 @@ $mainRedisConfig = [ //redis配置
 return [
     'memcache.main' => [ //memcache配置
         'servers' => [
-            ['host' => 'memcache.logistics.dev', 'port' => 11211]
+            ['host' => 'memcache.' . APP_NAME . '.dev', 'port' => 11211]
         ],
         'connect_timeout' => 1000, //ms
         'binary_protocol' => true,
@@ -33,7 +33,7 @@ return [
     'counter.main' => $mainRedisConfig, //计数器
 
     'queue.main' => [  //队列
-        'host' => 'redis.logistics.dev',
+        'host' => 'redis.' . APP_NAME . '.dev',
         'port' => 6379,
         'timeout' => 1, //s
         'pconnect' => false,
