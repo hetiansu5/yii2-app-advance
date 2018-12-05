@@ -4,7 +4,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=' . APP_NAME,
+            'dsn' => 'mysql:host=mysql.m.com;dbname=' . APP_NAME,
             'username' => 'project',
             'password' => 'Wlb43iPe872mkqw',
             'charset' => 'utf8mb4',
