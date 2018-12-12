@@ -68,9 +68,8 @@ abstract class Job
             if ($job) {
                 $this->perform($job);
             } else {
-                if ($this->workerSleepMicroseconds) {
-                    usleep($this->workerSleepMicroseconds);
-                }
+                //拿不到数据的时候休眠500ms
+                usleep(500000);
             }
 
             $loops++;
