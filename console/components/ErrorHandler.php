@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components;
+namespace console\components;
 
 use common\constants\LogType;
 use common\lib\fw\Logger;
