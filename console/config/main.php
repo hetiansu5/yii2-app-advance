@@ -23,6 +23,9 @@ $config = [
                 ],
             ],
         ],
+        'errorHandler' => [
+            'class' => 'console\components\ErrorHandler', //自定义错误处理类
+        ],
     ]
 ];
 
