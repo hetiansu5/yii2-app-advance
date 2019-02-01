@@ -1,6 +1,7 @@
 <?php
 namespace common\lib\fw\task;
 
+use common\constants\Common;
 use common\lib\fw\InstanceTrait;
 use common\lib\fw\Redis;
 
@@ -12,9 +13,9 @@ class Manager
 
     private $redis;
 
-    const RESTART_TIME_KEY = 'restart_time';
-    const RUNNING_SWITCH_KEY = 'run';
-    const WORKER_NUM_KEY = 'worker_num';
+    const RESTART_TIME_KEY = Common::PROJECT_KEY . ':restart_time';
+    const RUNNING_SWITCH_KEY = Common::PROJECT_KEY . ':run';
+    const WORKER_NUM_KEY = Common::PROJECT_KEY . ':worker_num';
 
     private function __construct(array $config)
     {
@@ -32,12 +33,12 @@ class Manager
 
     private function getTaskConfigKey($jobName)
     {
-        return 'task_conf:' . $jobName;
+        return Common::PROJECT_KEY . ':task_conf:' . $jobName;
     }
 
     private function getDaemonRestartTimeKey()
     {
-        return 'task_daemon_restart_time';
+        return Common::PROJECT_KEY . ':task_daemon_restart_time';
     }
 
     public function getTaskConfig($jobName)
