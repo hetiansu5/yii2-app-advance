@@ -57,15 +57,16 @@ while (1) {
         //载入任务配置(配置某任务是否启动,要启动几个进程等信息)
         $jobConf = $manager->getTaskConfig($jobName);
         $workerUri = 'task/work ' . $jobName;
+        $cmd = $yiiCmd . ' ' . $workerUri;
         //使用ps命令做进程匹配时,最后一个grep的值后面加上$,避免错误匹配
-        $processCount = intval(exec('ps ax|grep -v " grep"|grep "php"|grep "' . $workerUri . '$"|wc -l'));
+        $processCount = intval(exec('ps ax|grep -v " grep"|grep "php"|grep "' . $cmd . '$"|wc -l'));
         $isRunning = isset($jobConf[Manager::RUNNING_SWITCH_KEY]) ? (bool)$jobConf[Manager::RUNNING_SWITCH_KEY] : false;
         $workerNum = $isRunning && isset($jobConf[Manager::WORKER_NUM_KEY]) ? (int)$jobConf[Manager::WORKER_NUM_KEY] : 0;
         $diff = $workerNum - $processCount;
         if ($diff > 0) {
             //若实际运行的进程数少于配置的进程数,把少掉的补上
             for ($i = 0; $i < $diff; $i++) {
-                exec($yiiCmd . ' ' . $workerUri . '  >> /dev/null 2>&1 &');
+                exec($cmd . '  >> /dev/null 2>&1 &');
             }
         }
     }
