@@ -1,3 +1,12 @@
+## 项目概述
+基于YII2.0多应用项目源码[https://github.com/yiisoft/yii2-app-advanced](https://github.com/yiisoft/yii2-app-advanced)做了一些优化调整，感觉官方的项目使用还存在诸多不便，这边做的调整主要是让项目搭建运行起来更加流畅。主要涉及如下修改项：
+* 多环境的配置方案优化；
+* 优化本地Docker开发环境的流程；
+* 引入离线队列消费管理；
+* Model层增加了基础数据操作类，所以具体的Model实例都可以继承此类，减少重复代码；
+* 多语言包支持；
+* common目录增加cache缓存层、constants常量层、counter计数器层、service服务层、traits代码复用类层、formatter数据格式化层、lib第三方扩展类层、components组件层
+
 ## 目录结构
 -------------------
 
