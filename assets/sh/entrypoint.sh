@@ -6,13 +6,10 @@ echo -e "Configuring Logistics Develop Environment...\n"
 
 echo "YII_ENV=dev" >> /etc/crontab
 
-echo "export YII_ENV=\"dev\"" >> /etc/profile
-
-source /etc/profile
-
 appName="frameworks"
 
-sh /www/${appName}/assets/sh/init.sh &
+echo -e "Init Project...\n"
+sh /www/${appName}/assets/sh/init.sh >> /var/run/init.log 2>&1 &
 
 echo -e "Configuring Nginx\n"
 cp /www/${appName}/assets/nginx_conf/*    /usr/local/nginx/conf/server/

@@ -100,6 +100,10 @@
 
 eg. `console/web/yii task/work order_event`
 
+## 后台登录
+账号：hts
+密码：root123456
+
 
 ## 后台菜单方案
 

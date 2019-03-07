@@ -2,7 +2,7 @@
 基于YII2.0多应用项目源码[https://github.com/yiisoft/yii2-app-advanced](https://github.com/yiisoft/yii2-app-advanced)做了一些优化调整，感觉官方的项目使用还存在诸多不便，这边做的调整主要是让项目搭建运行起来更加流畅。主要涉及如下修改项：
 * 多环境的配置方案优化；
 * 优化本地Docker开发环境的流程；
-* 引入离线队列消费管理；
+* 引入消费队列解决方案（将不需要同步处理又耗时比较长的任务压入消息队列做离线处理，减少接口的响应时长，提升单机的QPS性能）；
 * Model层增加了基础数据操作类，所以具体的Model实例都可以继承此类，减少重复代码；
 * 多语言包支持；
 * common目录增加cache缓存层、constants常量层、counter计数器层、service服务层、traits代码复用类层、formatter数据格式化层、lib第三方扩展类层、components组件层
@@ -47,6 +47,26 @@ vendor/                  第三方依赖包
 assets/                  辅助脚本和环境配置文件等    
 ```
 
+## 开发环境搭建
+
+### 本机LNMP环境
+
+* Nginx配置，demo配置见assets/nginx_conf/*.conf
+* 环境变量配置
+* 执行sh assets/sh/init.sh初始化
+    * composer update, 不翻墙的话要等比较久
+    * 目录权限变更
+    * 创建必要文件目录
+    * Windows的话执行不了shell，大家可以参考一下shell脚本的实现一下
+* 本地HOST
+    127.0.0.1 host.docker.internal redis.logistics.dev memcache.logistics.dev
+    127.0.0.1 api.frameworks-dev.hetiansu.com admin.frameworks-dev.hetiansu.com    
+
+### Docker容器
+
+* 详细见[DOCKER.md](DOCKER.md)
+
+
 ## 项目根目录
 建议是以这种方式来
 /www/${appName}，若当前项目的appName为frameworks，新项目初始化可以全局搜索替换项目名称
@@ -55,7 +75,7 @@ assets/                  辅助脚本和环境配置文件等
 
 通过环境变量依赖外部注入，不同环境加载不同的配置，默认使用线上配置。
 
-### 环境变量类型
+### 环境类型定义
 
 * dev   开发环境    YII_ENV_DEV
 * pre   测试环境    YII_ENV_PRE (不用YII_ENV_TEST，是因为框架代码里面居然对这个环境做了很多特殊日志处理，乱输出东西)
@@ -74,39 +94,20 @@ source /etc/profile
 fastcgi_param YII_ENV "dev";
 ```
 
-## 开发环境搭建
-
-### 本机LNMP环境
-
-* Nginx配置，demo配置见assets/nginx_conf/*.conf
-* 环境变量配置
-* 执行sh assets/sh/init.sh初始化
-    * composer update, 不翻墙的话要等比较久
-    * 目录权限变更
-    * 创建必要文件目录
-    * Windows的话执行不了shell，大家可以参考一下shell脚本的实现一下
-* 本地HOST
-    127.0.0.1 host.docker.internal redis.logistics.dev memcache.logistics.dev    
-
-### Docker容器
-
-* 详细见[DOCKER.md](DOCKER.md)
-
-
 ## 项目域名方案
 
 ### dev开发环境
-* API域名  `api.frameworks-dev.xmwula.com`
-* 后台域名    `admin.frameworks-dev.xmwula.com`
+* API域名  `api.frameworks-dev.hetiansu.com`
+* 后台域名    `admin.frameworks-dev.hetiansu.com`
 
 
 ### pre测试环境  
-* 用户端API域名  `c.frameworks-pre.xmwula.com`
-* 后台域名    `admin.frameworks-pre.xmwula.com`
+* 用户端API域名  `api.frameworks-pre.hetiansu.com`
+* 后台域名    `admin.frameworks-pre.hetiansu.com`
 
 ### prod线上环境
-* 用户端API域名  `api-frameworks.cxyuns.com`
-* 后台域名    `admin-frameworks.cxyuns.com`
+* 用户端API域名  `api.frameworks.hetiansu.com`
+* 后台域名    `admin.frameworks.hetiansu.com`
       
 
 ## 分支管理
@@ -136,7 +137,6 @@ fastcgi_param YII_ENV "dev";
 eg. `console/web/yii test/say --times=2 hello`
 
 windows：`yii.bat task/work test_event`
-
 
 
 

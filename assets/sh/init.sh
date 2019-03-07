@@ -5,7 +5,7 @@ appName="frameworks"
 
 # cd root path
 rootPath=$(cd `dirname $0`/../../; pwd)
-
+cd ${rootPath}
 
 # composer vendor
 if [[ "$*" =~ "-i" ]]; then

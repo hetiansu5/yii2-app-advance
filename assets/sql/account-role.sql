@@ -27,7 +27,7 @@ CREATE TABLE `account` (
 --  Records of `account`
 -- ----------------------------
 BEGIN;
-INSERT INTO `account` VALUES ('21', 'zhy', '$2y$10$.MXlw3h0HnHTuflM6glD6OlAotbGZw1YZbWOrfFMBsOTQKq8thpya', 'zhy', '', '0', '0', '1', '0', '1', '1525384712', '0');
+INSERT INTO `account` VALUES ('21', 'hts', '$2y$10$OYZ68skKlM.0oeKJlwOqa.YPA6bf1tO14UkZmMIn24wgN3i4E94.y', 'hts', '', '0', '0', '1', '0', '1', '1525384712', '0');
 COMMIT;
 
 -- ----------------------------

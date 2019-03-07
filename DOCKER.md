@@ -23,7 +23,7 @@
 	```
 	* 启动Nginx-Proxy镜像，该镜像将监控上一步创建的nginx-proxy network内的所有新VIRTUHOST添加，并自动增加反向代理
 	```
-	$ docker run -d -p 80:80 --name nginx-proxy --net 	nginx-proxy --restart always -v /var/run/	docker.sock:/tmp/docker.sock jwilder/nginx-proxy
+	$ docker run -d -p 80:80 --name nginx-proxy --net 	nginx-proxy --restart always -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
 	```
 
 ### 启动项目服务
@@ -37,19 +37,19 @@ $ docker exec -it {container_name} sh # 登入进容器
 
 ### 配置本地解析
 给项目相关域名配置本地host
-127.0.0.1 {host}
+127.0.0.1 admin.frameworks-dev.hetiansu.com api.frameworks-dev.hetiansu.com
 
 ### 附加说明
 如果本地已经有搭建了Web服务器，上述启动Nginx-Proxy会有80端口冲突问题，可修改端口映射规则，命令如下
 ```
-$ docker run -d -p 20001:80  --name nginx-proxy --net 	nginx-proxy --restart always -v /var/run/	docker.sock:/tmp/docker.sock jwilder/nginx-proxy
+$ docker run -d -p 20001:80  --name nginx-proxy --net 	nginx-proxy --restart always -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
 ```
 
 另外需在Web服务配置代理转发，以下为Nginx的配置模板
 <pre>
 server {
 	listen 80;
-	server_name {host};
+	server_name admin.frameworks-dev.hetiansu.com api.frameworks-dev.hetiansu.com;
 	location / {
 			proxy_redirect off;
         	proxy_set_header Host $host;

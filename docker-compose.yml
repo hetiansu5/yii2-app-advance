@@ -12,7 +12,7 @@ services:
        - ".:/www/frameworks"
      restart: always
      environment:
-       VIRTUAL_HOST: api.frameworks-dev.xmwula.com,admin.frameworks-dev.xmwula.com
+       VIRTUAL_HOST: api.frameworks-dev.hetiansu.com,admin.frameworks-dev.hetiansu.com
        YII_ENV: "dev"
      container_name: frameworks.dev
      entrypoint: "/www/frameworks/assets/sh/entrypoint.sh"
